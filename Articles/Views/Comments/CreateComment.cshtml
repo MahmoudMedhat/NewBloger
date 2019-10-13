@@ -1,0 +1,15 @@
+﻿@model Articles.Models.Comment
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="w-100 pb-3 pt-3" style="width:100%">
+        @Html.TextAreaFor(model => model.CommentName, new { @class = "form-control", @style = "width:100%" })
+    </div>
+
+    <input type="submit" class="btn btn-info" value="Comment" />
+}
+
+

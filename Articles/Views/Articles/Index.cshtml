@@ -1,0 +1,56 @@
+﻿
+@model IEnumerable<Articles.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2 class="text-info pt-5 pb-5">List of Publications</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p class="text-success">
+        @Html.ActionLink("Create New Articles", "Create", null, htmlAttributes: new { @class = "text-success" })
+    </p>
+    <p class="text-success">
+        @Html.ActionLink("Create New Category", "Create", "Categories", null, htmlAttributes: new { @class = "text-success" })
+    </p>
+}
+
+@foreach (var item in Model)
+{
+    <div class="card border">
+        <div class="card-body">
+            <h3 class="card-title">
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </h3>
+            <p class="text-muted">
+                <small>Publisher: @Html.DisplayFor(modelItem => item.AspNetUser.Email)</small>
+            </p>
+            <p class="card-text font-weight-bold ">
+                @Html.DisplayFor(modelItem => item.Name)
+            </p>
+            <p class="text-muted">
+                <small>date of publication @Html.DisplayFor(modelItem => item.ArticleDate)</small>
+            </p>
+        </div>
+        <div class="card-footer">
+            <h4 class="card-title">Comments</h4>
+            @foreach (var Comment in item.Comments)
+            {
+                <p class="text-muted">
+                    <small> @Html.DisplayFor(x => Comment.AspNetUser.UserName)</small>
+                </p>
+                <p class="text-info">
+                    @Html.DisplayFor(modelItem => Comment.CommentName)
+                </p>
+                <hr />
+            }
+        </div>
+    </div>
+    <div class="pt-2 pb-5"> @Html.ActionLink("Create Comment", "CreateComment", "Comments", new { id = item.Id }, new { @class = "btn btn-info " })</div>
+
+    @*@Html.Action("CreateComment", "Articles", new { id = item.Id })*@
+
+
+
+}
+
